@@ -1,6 +1,7 @@
-import 'package:calcapp/Model/Provider/OperationProvider.dart';
+import 'package:calcapp/Provider/OperationProvider.dart';
 
 import 'package:calcapp/Control/ActionButtons.dart';
+import 'package:calcapp/Provider/resultProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,14 +42,16 @@ class _ButtonGridState extends ConsumerState<ButtonGrid> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ActionButton("AC", Colors.blueAccent, Colors.transparent, () {
-                  ref.read(opProvider.notifier).clearList();
+                  ref.read(operationProvider.notifier).clearList();
+                  ref.read(resultProvider.notifier).clearString();
                 }),
-                ActionButton(
-                    "<-", Colors.blueAccent, Colors.transparent, () {}),
+                ActionButton("<-", Colors.blueAccent, Colors.transparent, () {
+                  ref.read(operationProvider.notifier).removeElement();
+                }),
                 ActionButton(
                     "+/-", Colors.blueAccent, Colors.transparent, () {}),
                 ActionButton("/", Colors.blueAccent, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("/");
+                  ref.read(operationProvider.notifier).addElement("/");
                 })
               ],
             ),
@@ -59,16 +62,16 @@ class _ButtonGridState extends ConsumerState<ButtonGrid> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ActionButton("7", Colors.white, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("7");
+                  ref.read(operationProvider.notifier).addElement("7");
                 }),
                 ActionButton("8", Colors.white, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("8");
+                  ref.read(operationProvider.notifier).addElement("8");
                 }),
                 ActionButton("9", Colors.white, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("9");
+                  ref.read(operationProvider.notifier).addElement("9");
                 }),
                 ActionButton("*", Colors.blueAccent, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("*");
+                  ref.read(operationProvider.notifier).addElement("*");
                 })
               ],
             ),
@@ -79,16 +82,16 @@ class _ButtonGridState extends ConsumerState<ButtonGrid> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ActionButton("4", Colors.white, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("4");
+                  ref.read(operationProvider.notifier).addElement("4");
                 }),
                 ActionButton("5", Colors.white, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("5");
+                  ref.read(operationProvider.notifier).addElement("5");
                 }),
                 ActionButton("6", Colors.white, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("6");
+                  ref.read(operationProvider.notifier).addElement("6");
                 }),
                 ActionButton("-", Colors.blueAccent, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("-");
+                  ref.read(operationProvider.notifier).addElement("-");
                 })
               ],
             ),
@@ -99,16 +102,16 @@ class _ButtonGridState extends ConsumerState<ButtonGrid> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ActionButton("1", Colors.white, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("1");
+                  ref.read(operationProvider.notifier).addElement("1");
                 }),
                 ActionButton("2", Colors.white, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("2");
+                  ref.read(operationProvider.notifier).addElement("2");
                 }),
                 ActionButton("3", Colors.white, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("3");
+                  ref.read(operationProvider.notifier).addElement("3");
                 }),
                 ActionButton("+", Colors.blueAccent, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("3");
+                  ref.read(operationProvider.notifier).addElement("+");
                 })
               ],
             ),
@@ -119,16 +122,18 @@ class _ButtonGridState extends ConsumerState<ButtonGrid> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ActionButton("%", Colors.white, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("%");
+                  ref.read(operationProvider.notifier).addElement("%");
                 }),
                 ActionButton("0", Colors.white, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement("0");
+                  ref.read(operationProvider.notifier).addElement("0");
                 }),
                 ActionButton(".", Colors.white, Colors.transparent, () {
-                  ref.read(opProvider.notifier).addElement(".");
+                  ref.read(operationProvider.notifier).addElement(".");
                 }),
                 ActionButton("=", Colors.white, Colors.blueAccent[400], () {
-                  //ref.read(opProvider.notifier).addElement("-");
+                  String s = ref.watch(operationProvider).join();
+                  ref.read(resultProvider.notifier).eval(s);
+                  //print(s);
                 })
               ],
             ),
