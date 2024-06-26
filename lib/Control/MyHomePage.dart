@@ -1,3 +1,4 @@
+import 'package:calcapp/Control/ListBuilderPractice.dart';
 import 'package:flutter/material.dart';
 import 'package:calcapp/View/CalcBody.dart';
 
@@ -7,7 +8,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           toolbarHeight: 120,
-          title: Text(
+          title: const Text(
             "Calculator",
             style: TextStyle(
                 color: Colors.blueAccent,
@@ -17,7 +18,7 @@ class MyHomePage extends StatelessWidget {
           actions: [
             TextButton(
                 onPressed: () {},
-                child: Icon(
+                child: const Icon(
                   Icons.settings,
                   size: 33,
                 ))
@@ -25,6 +26,8 @@ class MyHomePage extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Colors.black87,
         ),
-        body: CalcBody());
+        body: CalcBody()
+        //calcBody
+        );
   }
 }

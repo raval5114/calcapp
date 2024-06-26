@@ -1,8 +1,9 @@
+import 'package:calcapp/Control/ListBuilderPractice.dart';
+import 'package:calcapp/Model/OperationModel.dart';
+import 'package:calcapp/Provider/OperationHistoryProvider.dart';
 import 'package:calcapp/Provider/OperationProvider.dart';
-
 import 'package:calcapp/Control/ActionButtons.dart';
 import 'package:calcapp/Provider/resultProvider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,22 +17,18 @@ class ButtonGrid extends ConsumerStatefulWidget {
 class _ButtonGridState extends ConsumerState<ButtonGrid> {
   @override
   Widget build(BuildContext context) {
+    //final result = ref.watch(resultProvider.notifier);
     return Container(
       width: 480,
       height: 479,
       color: Colors.black87,
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20),
+          const Padding(
+            padding: EdgeInsets.only(left: 20),
             child: Row(
               children: [
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.history,
-                      size: 30,
-                    )),
+                HistoryShowingButton(Icon(color: Colors.white, Icons.history)),
                 Expanded(child: SizedBox())
               ],
             ),
@@ -132,7 +129,11 @@ class _ButtonGridState extends ConsumerState<ButtonGrid> {
                 }),
                 ActionButton("=", Colors.white, Colors.blueAccent[400], () {
                   String s = ref.watch(operationProvider).join();
-                  ref.read(resultProvider.notifier).eval(s);
+                  ref.watch(resultProvider.notifier).eval(s);
+                  final res = ref.watch(resultProvider);
+                  ref
+                      .watch(historyProviderProvider.notifier)
+                      .addElement(OperationModel(s, res));
                   //print(s);
                 })
               ],

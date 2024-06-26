@@ -1,6 +1,4 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:calcapp/Model/string_gen.dart';
-
 part 'OperationProvider.g.dart';
 
 @riverpod
